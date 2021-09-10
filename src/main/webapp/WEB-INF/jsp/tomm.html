@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.cookie.js"></script>
+</head>
+<body>
+姓名1: <input id="username1" type="text" name="username1" value=""/>
+姓名2: <input id="username2" type="text" name="username2" value=""/>
+</body>
+
+<script type="text/javascript">
+    var obj = $("#username1");
+    alert($.cookie("username1"));
+    obj.val($.cookie("username1"));
+
+    var obj = $("#username2");
+    alert($.cookie("username2"));
+    obj.val($.cookie("username2"));
+</script>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfby.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.dfby.pojo.User">
+        <id column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="birthday" jdbcType="TIMESTAMP" property="birthday"/>
+        <result column="hiredate" jdbcType="TIMESTAMP" property="hiredate"/>
+        <result column="position" jdbcType="VARCHAR" property="position"/>
+        <result column="qualification" jdbcType="VARCHAR" property="qualification"/>
+        <result column="professional" jdbcType="VARCHAR" property="professional"/>
+        <result column="experience" jdbcType="LONGVARCHAR" property="experience"/>
+        <result column="flag" jdbcType="VARCHAR" property="flag"/>
+        <result column="super_id" jdbcType="VARCHAR" property="superId"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    username, name, password, sex, birthday, hiredate, position, qualification, professional, experience
+    flag, super_id
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tbl_user
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tbl_user
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.dfby.pojo.User">
+    insert into tbl_user (username, name, password, 
+      sex, birthday, hiredate, 
+      position, qualification, professional, 
+      flag, super_id, experience
+      )
+    values (#{username,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{hiredate,jdbcType=TIMESTAMP}, 
+      #{position,jdbcType=VARCHAR}, #{qualification,jdbcType=VARCHAR}, #{professional,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=VARCHAR}, #{superId,jdbcType=VARCHAR}, #{experience,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.dfby.pojo.User">
+        insert into tbl_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                username,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="hiredate != null">
+                hiredate,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="qualification != null">
+                qualification,
+            </if>
+            <if test="professional != null">
+                professional,
+            </if>
+            <if test="flag != null">
+                flag,
+            </if>
+            <if test="superId != null">
+                super_id,
+            </if>
+            <if test="experience != null">
+                experience,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="hiredate != null">
+                #{hiredate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="qualification != null">
+                #{qualification,jdbcType=VARCHAR},
+            </if>
+            <if test="professional != null">
+                #{professional,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="superId != null">
+                #{superId,jdbcType=VARCHAR},
+            </if>
+            <if test="experience != null">
+                #{experience,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.dfby.pojo.User">
+        update tbl_user
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=TIMESTAMP},
+            </if>
+            <if test="hiredate != null">
+                hiredate = #{hiredate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="qualification != null">
+                qualification = #{qualification,jdbcType=VARCHAR},
+            </if>
+            <if test="professional != null">
+                professional = #{professional,jdbcType=VARCHAR},
+            </if>
+            <if test="flag != null">
+                flag = #{flag,jdbcType=VARCHAR},
+            </if>
+            <if test="superId != null">
+                super_id = #{superId,jdbcType=VARCHAR},
+            </if>
+            <if test="experience != null">
+                experience = #{experience,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where username = #{username,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.dfby.pojo.User">
+    update tbl_user
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      hiredate = #{hiredate,jdbcType=TIMESTAMP},
+      position = #{position,jdbcType=VARCHAR},
+      qualification = #{qualification,jdbcType=VARCHAR},
+      professional = #{professional,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR},
+      super_id = #{superId,jdbcType=VARCHAR},
+      experience = #{experience,jdbcType=LONGVARCHAR}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+
+    <select id="checkLogin" resultMap="BaseResultMap" parameterType="User">
+  select * from tbl_user where username=#{username} and password=#{password}
+  </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+    select * from tbl_user
+  </select>
+
+    <select id="selectBySuper" parameterType="com.dfby.pojo.User" resultMap="BaseResultMap">
+    select * from tbl_user where super_id=#{username}
+  </select>
+
+    <select id="selectByStaff" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from tbl_user
+        <where>
+        <if test="_parameter != null">
+            flag = #{flag}
+        </if>
+        </where>
+    </select>
+
+
+    <select id="selectByDirector" resultMap="BaseResultMap">
+    select * from tbl_user where flag=2
+  </select>
+
+    <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from tbl_user where name=#{name}
+  </select>
+
+
+</mapper>

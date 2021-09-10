@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfby.dao.PlanMapper">
+  <resultMap id="BaseResultMap" type="com.dfby.pojo.Plan">
+    <id column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="planname" jdbcType="VARCHAR" property="planname" />
+    <result column="planstate" jdbcType="VARCHAR" property="planstate" />
+    <result column="feedback" jdbcType="VARCHAR" property="feedback" />
+    <result column="planbegintime" jdbcType="TIMESTAMP" property="planbegintime" />
+    <result column="planendtime" jdbcType="TIMESTAMP" property="planendtime" />
+    <result column="plandescription" jdbcType="LONGVARCHAR" property="plandescription" />
+    <result column="zfeedback" jdbcType="LONGVARCHAR" property="planfeedback" />
+    <result column="taskid" jdbcType="INTEGER" property="taskid"/>
+    <association property="task" column="taskid"  select="com.dfby.dao.TaskMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, planname, planstate, feedback, planbegintime, planendtime, taskid, plandescription, planfeedback
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_plan
+    where pid = #{pid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_plan
+    where pid = #{pid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dfby.pojo.Plan">
+    insert into tbl_plan (pid, planname, planstate,
+      feedback, planbegintime, planendtime,
+      taskid, plandescription, planfeedback
+      )
+    values (#{pid,jdbcType=INTEGER}, #{planname,jdbcType=VARCHAR}, #{planstate,jdbcType=VARCHAR},
+      #{feedback,jdbcType=VARCHAR}, #{planbegintime,jdbcType=TIMESTAMP}, #{planendtime,jdbcType=TIMESTAMP},
+      #{taskid,jdbcType=INTEGER}, #{plandescription,jdbcType=LONGVARCHAR}, #{planfeedback,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dfby.pojo.Plan">
+    insert into tbl_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="planname != null">
+        planname,
+      </if>
+      <if test="planstate != null">
+        planstate,
+      </if>
+      <if test="feedback != null">
+        feedback,
+      </if>
+      <if test="planbegintime != null">
+        planbegintime,
+      </if>
+      <if test="planendtime != null">
+        planendtime,
+      </if>
+      <if test="taskid != null">
+        taskid,
+      </if>
+      <if test="plandescription != null">
+        plandescription,
+      </if>
+      <if test="planfeedback != null">
+        planfeedback,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="planname != null">
+        #{planname,jdbcType=VARCHAR},
+      </if>
+      <if test="planstate != null">
+        #{planstate,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null">
+        #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="planbegintime != null">
+        #{planbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planendtime != null">
+        #{planendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskid != null">
+        #{taskid,jdbcType=INTEGER},
+      </if>
+      <if test="plandescription != null">
+        #{plandescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="planfeedback != null">
+        #{planfeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfby.pojo.Plan">
+    update tbl_plan
+    <set>
+      <if test="planname != null">
+        planname = #{planname,jdbcType=VARCHAR},
+      </if>
+      <if test="planstate != null">
+        planstate = #{planstate,jdbcType=VARCHAR},
+      </if>
+      <if test="feedback != null">
+        feedback = #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="planbegintime != null">
+        planbegintime = #{planbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planendtime != null">
+        planendtime = #{planendtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskid != null">
+        taskid = #{taskid,jdbcType=INTEGER},
+      </if>
+      <if test="plandescription != null">
+        plandescription = #{plandescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="planfeedback != null">
+        planfeedback = #{planfeedback,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dfby.pojo.Plan">
+    update tbl_plan
+    set planname = #{planname,jdbcType=VARCHAR},
+      planstate = #{planstate,jdbcType=VARCHAR},
+      feedback = #{feedback,jdbcType=VARCHAR},
+      planbegintime = #{planbegintime,jdbcType=TIMESTAMP},
+      planendtime = #{planendtime,jdbcType=TIMESTAMP},
+      taskid = #{taskid,jdbcType=INTEGER},
+      plandescription = #{plandescription,jdbcType=LONGVARCHAR},
+      planfeedback = #{planfeedback,jdbcType=LONGVARCHAR}
+    where pid = #{pid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectBytaskid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from tbl_plan where taskid=#{taskid}
+  </select>
+
+  <select id="selectByPlan" parameterType="com.dfby.pojo.Plan" resultMap="BaseResultMap">
+    select *
+    from tbl_plan
+    <where>
+      <if test="planname != null">
+        and planname = #{planname,jdbcType=VARCHAR}
+      </if>
+      <if test="planstate != null">
+        and planstate = #{planstate,jdbcType=VARCHAR}
+      </if>
+      <if test="feedback != null">
+        and feedback = #{feedback,jdbcType=VARCHAR}
+      </if>
+      <if test="planbegintime != null">
+        and planbegintime = #{planbegintime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="planendtime != null">
+        and planendtime = #{planendtime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="taskid != null">
+        and taskid = #{taskid,jdbcType=INTEGER}
+      </if>
+      <if test="plandescription != null">
+        and plandescription = #{plandescription,jdbcType=LONGVARCHAR}
+      </if>
+      <if test="planfeedback != null">
+        and planfeedback = #{planfeedback,jdbcType=LONGVARCHAR}
+      </if>
+    </where>
+  </select>
+
+</mapper>

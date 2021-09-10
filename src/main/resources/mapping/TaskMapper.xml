@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dfby.dao.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.dfby.pojo.Task">
+    <id column="tid" jdbcType="INTEGER" property="tid" />
+    <result column="taskname" jdbcType="VARCHAR" property="taskname" />
+    <result column="taskbegintime" jdbcType="TIMESTAMP" property="taskbegintime" />
+    <result column="taskendtiime" jdbcType="TIMESTAMP" property="taskendtiime" />
+    <result column="taskstate" jdbcType="VARCHAR" property="taskstate" />
+    <result column="staffid" jdbcType="VARCHAR" property="staffid" />
+    <result column="empid" jdbcType="VARCHAR" property="empid" />
+    <result column="taskdescription" jdbcType="LONGVARCHAR" property="taskdescription" />
+    <association property="user" column="staffid"  select="com.dfby.dao.UserMapper.selectByPrimaryKey"></association>
+<!--    <collection property="planList" column="tid" ofType="Plan" select="com.dfby.dao.PlanMapper.selectBytaskid"></collection>-->
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    tid, taskname, taskbegintime, taskendtiime, taskstate, staffid, empid ,taskdescription
+  </sql>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_task
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tbl_task
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dfby.pojo.Task">
+    insert into tbl_task (tid, taskname, taskbegintime, 
+      taskendtiime, taskstate, staffid, 
+      empid, taskdescription)
+    values (#{tid,jdbcType=INTEGER}, #{taskname,jdbcType=VARCHAR}, #{taskbegintime,jdbcType=TIMESTAMP}, 
+      #{taskendtiime,jdbcType=TIMESTAMP}, #{taskstate,jdbcType=VARCHAR}, #{staffid,jdbcType=VARCHAR}, 
+      #{empid,jdbcType=VARCHAR}, #{taskdescription,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dfby.pojo.Task">
+    insert into tbl_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        tid,
+      </if>
+      <if test="taskname != null">
+        taskname,
+      </if>
+      <if test="taskbegintime != null">
+        taskbegintime,
+      </if>
+      <if test="taskendtiime != null">
+        taskendtiime,
+      </if>
+      <if test="taskstate != null">
+        taskstate,
+      </if>
+      <if test="staffid != null">
+        staffid,
+      </if>
+      <if test="empid != null">
+        empid,
+      </if>
+      <if test="taskdescription != null">
+        taskdescription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tid != null">
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="taskname != null">
+        #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskbegintime != null">
+        #{taskbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskendtiime != null">
+        #{taskendtiime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskstate != null">
+        #{taskstate,jdbcType=VARCHAR},
+      </if>
+      <if test="staffid != null">
+        #{staffid,jdbcType=VARCHAR},
+      </if>
+      <if test="empid != null">
+        #{empid,jdbcType=VARCHAR},
+      </if>
+      <if test="taskdescription != null">
+        #{taskdescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dfby.pojo.Task">
+    update tbl_task
+    <set>
+      <if test="taskname != null">
+        taskname = #{taskname,jdbcType=VARCHAR},
+      </if>
+      <if test="taskbegintime != null">
+        taskbegintime = #{taskbegintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskendtiime != null">
+        taskendtiime = #{taskendtiime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskstate != null">
+        taskstate = #{taskstate,jdbcType=VARCHAR},
+      </if>
+      <if test="staffid != null">
+        staffid = #{staffid,jdbcType=VARCHAR},
+      </if>
+      <if test="empid != null">
+        empid = #{empid,jdbcType=VARCHAR},
+      </if>
+      <if test="taskdescription != null">
+        taskdescription = #{taskdescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dfby.pojo.Task">
+    update tbl_task
+    set taskname = #{taskname,jdbcType=VARCHAR},
+      taskbegintime = #{taskbegintime,jdbcType=TIMESTAMP},
+      taskendtiime = #{taskendtiime,jdbcType=TIMESTAMP},
+      taskstate = #{taskstate,jdbcType=VARCHAR},
+      staffid = #{staffid,jdbcType=VARCHAR},
+      empid = #{empid,jdbcType=VARCHAR},
+      taskdescription = #{taskdescription,jdbcType=LONGVARCHAR}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByEmpid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from tbl_task where empid=#{empid}
+  </select>
+
+  <select id="selectBystaffid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from tbl_task  where staffid=#{staffid}
+
+  </select>
+
+  <select id="selectByUn" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from tbl_task where taskstate='未实施' and empid=#{empid}
+  </select>
+
+  <select id="selectByIng" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select * from tbl_task where taskstate='实施中' and empid=#{empid}
+  </select>
+</mapper>
